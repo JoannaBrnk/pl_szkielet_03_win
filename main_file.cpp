@@ -55,6 +55,7 @@ struct Duch {
 	int kolor = 0;
 	int x;
 	int y;
+	int kierunek = 0; //lewo
 
 	Duch(int x, int y, int kolor) {
 		this->x = x;
@@ -73,6 +74,7 @@ bool czy_jest_duch_na_pozycji(int x, int y) {
 	}
 	return false;
 }
+
 
 
 int Planszak[12][24] =
@@ -95,6 +97,30 @@ int ruch=0;
 GLuint tex, scianat, planszat,pieniazekt,pacmant,duszek1, duszek2, duszek3;
 float light[] = { 0, 0, -10, 1 };
 
+
+void rusz_duchem(Duch* duch) {
+	
+	int sasiadujace_pola[] = {
+		Planszak[duch->y][duch->x - 1],
+		Planszak[duch->y + 1][duch->x],
+		Planszak[duch->y][duch->x + 1],
+		Planszak[duch->y - 1][duch->x]
+	};
+
+	// 0 - lewo, 1- gora, 2-prawo, 3 -dol
+	
+	while(sasiadujace_pola[duch->kierunek] == 1)
+		duch->kierunek = rand() % 4;
+
+	if (duch->kierunek == 0)
+		duch->x--;
+	else if (duch->kierunek == 1)
+		duch->y++;
+	else if (duch->kierunek == 2)
+		duch->x++;
+	else
+		duch->y--;
+}
 
 //Do wczytania obrazka
 GLuint readTexture(const char* filename) {
@@ -631,8 +657,9 @@ int main(void)
 				break;
 			}
 		
-		for (int i = 0; i < 3; i++) {
-
+	    
+		for (auto* duch : duszki) {
+			rusz_duchem(duch);
 		}
 
 
