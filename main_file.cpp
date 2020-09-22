@@ -50,6 +50,7 @@ float uplynelo_od_ruchu_duchow = 0;
 float speed_x = 0;//[radiany/s]
 float speed_y = 0;//[radiany/s]
 int punkty = 0, strona = 0;
+int max_liczba_monet = 0;
 
 
 struct Duch {
@@ -544,6 +545,14 @@ int main(void)
 	duszki.push_back(new Duch(11, 2, 11));
 	duszki.push_back(new Duch(12, 2, 12));
 
+	for (int i = 0; i < 12; i++) {
+		for (int j = 0; j < 24; j++) {
+			if (Planszak[i][j] == 2) {
+				max_liczba_monet++;
+			}
+		}
+	}
+
 	if (!glfwInit()) { //Zainicjuj bibliotekę GLFW
 		fprintf(stderr, "Nie można zainicjować GLFW.\n");
 		exit(EXIT_FAILURE);
@@ -588,6 +597,9 @@ int main(void)
 		angle_y += speed_y * glfwGetTime();
 		angle_z += PI/2 * glfwGetTime();
 		glfwSetTime(0); //Wyzeruj licznik czasu
+
+		if (punkty == max_liczba_monet)
+			break;
 
 		switch (ruch)
 			{
