@@ -46,6 +46,7 @@ using namespace glm;
 
 bool przegrales = false;
 float aspectRatio = 1, uplynelo1 = 0, uplynelo2 = 0;
+float uplynelo_od_ruchu_duchow = 0;
 float speed_x = 0;//[radiany/s]
 float speed_y = 0;//[radiany/s]
 int punkty = 0, strona = 0;
@@ -501,6 +502,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y, float angle_z) 
 	glfwSwapBuffers(window); //Skopiuj bufor tylny do bufora przedniego
 	uplynelo1 = uplynelo1 + glfwGetTime();
 	uplynelo2 = uplynelo2 + glfwGetTime();
+	uplynelo_od_ruchu_duchow += glfwGetTime();
 	//for (int i = 0; i < 3; i++)
 	//	for (int j = 0; i < 2; i++)
 	//		cout << pozdusz[i][j];
@@ -658,10 +660,13 @@ int main(void)
 			}
 		
 	    
-		for (auto* duch : duszki) {
-			rusz_duchem(duch);
+		if (uplynelo_od_ruchu_duchow >= 0.5) {
+			uplynelo_od_ruchu_duchow = 0;
+			for (auto* duch : duszki) {
+				rusz_duchem(duch);
+			}
 		}
-
+		
 
 		drawScene(window, angle_x, angle_y, angle_z);
 		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
