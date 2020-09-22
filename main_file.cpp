@@ -49,10 +49,25 @@ float aspectRatio = 1, uplynelo1 = 0, uplynelo2 = 0;
 float speed_x = 0;//[radiany/s]
 float speed_y = 0;//[radiany/s]
 int punkty = 0, strona = 0;
+
+struct Duch {
+	int kolor = 0;
+	int x;
+	int y;
+
+	Duch(int x, int y, int kolor) {
+		this->x = x;
+		this->y = y;
+		this->kolor = kolor;
+	}
+};
+
+std::vector <Duch*> duszki;
+
 int Planszak[12][24] =
 { {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 {1,2,2,2,1,2,1,1,2,2,1,1,1,1,2,2,1,1,2,1,2,2,2,1},
-{1,1,1,2,2,2,2,2,2,2,10,11,12,2,2,2,2,2,2,2,2,1,1,1},
+{1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1},
 {1,2,1,2,1,2,2,1,1,1,1,1,1,1,1,1,1,2,2,1,2,1,2,1},
 {1,2,1,2,1,2,1,1,2,2,2,2,2,2,2,2,1,1,2,1,2,1,2,1},
 {1,2,1,2,2,2,1,2,2,2,2,2,2,2,2,2,2,1,2,2,2,1,2,1},
@@ -433,11 +448,10 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y, float angle_z) 
 					pozycja[0] = i;
 					pozycja[1] = j;
 				}
-				else if (Planszak[i][j] >= 10) {
-					duszki2(P, V, M, (2.2f - j * 0.2f), 2.2f - i * 0.4f, Planszak[i][j]);
-					cout << Planszak[i][j] - 10 << i << j << endl;
-					pozdusz[Planszak[i][j] - 10][i, j];
-				}
+			}
+
+			for (auto* duch : duszki) {
+				duszki2(P, V, M, (2.2f - duch->x * 0.2f), 2.2f - duch->y * 0.4f, duch->kolor);
 			}
 
 		}
@@ -462,6 +476,10 @@ int main(void)
 	GLFWwindow* window; //Wskaźnik na obiekt reprezentujący okno
 
 	glfwSetErrorCallback(error_callback);//Zarejestruj procedurę obsługi błędów
+
+	duszki.push_back(new Duch(10, 2, 10));
+	duszki.push_back(new Duch(11, 2, 11));
+	duszki.push_back(new Duch(12, 2, 12));
 
 	if (!glfwInit()) { //Zainicjuj bibliotekę GLFW
 		fprintf(stderr, "Nie można zainicjować GLFW.\n");
