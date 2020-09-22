@@ -121,6 +121,10 @@ void rusz_duchem(Duch* duch) {
 		duch->x++;
 	else
 		duch->y--;
+
+	if (Planszak[duch->y][duch->x] == 3) {
+		przegrales = true;
+	}
 }
 
 //Do wczytania obrazka
