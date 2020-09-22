@@ -56,7 +56,7 @@ struct Duch {
 	int kolor = 0;
 	int x;
 	int y;
-	int kierunek = 0; //lewo
+	int kierunek = rand() % 4; 
 
 	Duch(int x, int y, int kolor) {
 		this->x = x;
