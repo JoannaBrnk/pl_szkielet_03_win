@@ -113,6 +113,26 @@ void rusz_duchem(Duch* duch) {
 	while(sasiadujace_pola[duch->kierunek] == 1)
 		duch->kierunek = rand() % 4;
 
+	if (rand() % 10 < 4) {
+		int inny_kierunek_1 = (duch->kierunek + 1) % 4;
+		int inny_kierunek_2 = (duch->kierunek + 3) % 4;
+
+		int inny_kierunek_1_pole = sasiadujace_pola[inny_kierunek_1];
+		int inny_kierunek_2_pole = sasiadujace_pola[inny_kierunek_2];
+
+		if (inny_kierunek_1_pole != 1 && inny_kierunek_2_pole != 1) {
+			if (rand() % 2)
+				duch->kierunek = inny_kierunek_1;
+			else
+				duch->kierunek = inny_kierunek_2;
+		}else if(inny_kierunek_1_pole != 1)
+			duch->kierunek = inny_kierunek_1;
+		else if(inny_kierunek_2_pole != 1)
+			duch->kierunek = inny_kierunek_2;
+	}
+
+
+
 	if (duch->kierunek == 0)
 		duch->x--;
 	else if (duch->kierunek == 1)
