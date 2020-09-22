@@ -50,6 +50,7 @@ float speed_x = 0;//[radiany/s]
 float speed_y = 0;//[radiany/s]
 int punkty = 0, strona = 0;
 
+
 struct Duch {
 	int kolor = 0;
 	int x;
@@ -63,6 +64,16 @@ struct Duch {
 };
 
 std::vector <Duch*> duszki;
+
+
+bool czy_jest_duch_na_pozycji(int x, int y) {
+	for (auto* duch : duszki) {
+		if (duch->x == x && duch->y == y)
+			return true;
+	}
+	return false;
+}
+
 
 int Planszak[12][24] =
 { {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -544,9 +555,10 @@ int main(void)
 							Planszak[pozycja[0]][pozycja[1]] = 0;
 							Planszak[pozycja[0] - 1][pozycja[1]] = 3;
 						}
-						else if (Planszak[pozycja[0] - 1][pozycja[1]] >= 10) {
+
+						if(czy_jest_duch_na_pozycji(pozycja[1], pozycja[0] - 1 ))
 							przegrales = true;
-						}
+
 					}
 				}
 				break;
@@ -566,9 +578,9 @@ int main(void)
 							Planszak[pozycja[0]][pozycja[1]] = 0;
 							Planszak[pozycja[0]][pozycja[1] - 1] = 3;
 						}
-						else if (Planszak[pozycja[0]][pozycja[1] - 1] >= 10) {
+					
+						if (czy_jest_duch_na_pozycji(pozycja[1]-1, pozycja[0]))
 							przegrales = true;
-						}
 					}
 				}
 				break;
@@ -588,9 +600,8 @@ int main(void)
 							Planszak[pozycja[0]][pozycja[1]] = 0;
 							Planszak[pozycja[0]][pozycja[1] + 1] = 3;
 						}
-						else if (Planszak[pozycja[0]][pozycja[1] + 1] >= 10) {
+						if (czy_jest_duch_na_pozycji(pozycja[1] + 1, pozycja[0]))
 							przegrales = true;
-						}
 					}
 				}
 				break;
@@ -610,9 +621,9 @@ int main(void)
 							Planszak[pozycja[0]][pozycja[1]] = 0;
 							Planszak[pozycja[0] + 1][pozycja[1]] = 3;
 						}
-						else if (Planszak[pozycja[0] + 1][pozycja[1]] >= 10) {
+
+						if (czy_jest_duch_na_pozycji(pozycja[1], pozycja[0] + 1))
 							przegrales = true;
-						}
 					}
 				}
 				break;
